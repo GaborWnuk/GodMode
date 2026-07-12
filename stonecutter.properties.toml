@@ -1,0 +1,26 @@
+# Shared and per-version/per-loader properties, see
+# https://stonecutter.kikugie.dev/wiki/config/properties#centralized-properties
+mod.id = "godmode"
+mod.name = "God Mode"
+mod.group = "com.gaborwnuk.godmode"
+mod.version = "1.0.0"
+
+deps.fabric_loader = "0.19.3"
+deps.fabric_kotlin = "1.13.12+kotlin.2.4.0"
+
+["26.1.2"]
+# List of releases to be marked compatible on Modrinth/Curseforge
+mod.mc_releases = ["26.1.2"]
+
+[fabric."26.1.2"]
+# Mod compatibility range in fabric.mod.json (~26.1.2 means >=26.1.2 <26.2)
+mod.mc_compat = "~26.1.2"
+# check this on https://fabricmc.net/develop
+deps.fabric_api = "0.154.2+26.1.2"
+
+[neoforge."26.1.2"]
+mod.mc_compat = "[26.1.2,26.2)"
+# check these on https://projects.neoforged.net/neoforged/neoforge
+# and https://github.com/thedarkcolour/KotlinForForge
+deps.neo_loader = "26.1.2.78"
+deps.kotlin_forge = "6.3.0"

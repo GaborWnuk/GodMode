@@ -1,24 +1,15 @@
 package com.gaborwnuk.godmode
 
-import net.neoforged.bus.api.IEventBus
-import net.neoforged.fml.common.Mod
-import net.neoforged.neoforge.common.NeoForge
+import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 
-@Mod(GodMode.MOD_ID)
-class GodMode(modEventBus: IEventBus) {
-	init {
-		GodModeAttachments.REGISTER.register(modEventBus)
-		GodModeGameRules.REGISTER.register(modEventBus)
+/**
+ * Loader-independent mod constants; the per-loader entrypoints are
+ * [GodModeFabric] and [GodModeNeoForge].
+ */
+object GodMode {
+	const val MOD_ID = "godmode"
+	val LOGGER = LoggerFactory.getLogger(MOD_ID)!!
 
-		NeoForge.EVENT_BUS.addListener(DeathPrevention::onLivingDeath)
-		NeoForge.EVENT_BUS.addListener(GodModeCommands::register)
-
-		LOGGER.info("God Mode ready — deaths will be politely declined")
-	}
-
-	companion object {
-		const val MOD_ID = "godmode"
-		val LOGGER = LoggerFactory.getLogger(MOD_ID)!!
-	}
+	fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
 }

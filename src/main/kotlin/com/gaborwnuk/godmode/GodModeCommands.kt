@@ -1,12 +1,12 @@
 package com.gaborwnuk.godmode
 
+import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.permissions.Permissions
-import net.neoforged.neoforge.event.RegisterCommandsEvent
 
 /**
  * ```
@@ -17,8 +17,8 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent
  * ```
  */
 object GodModeCommands {
-	fun register(event: RegisterCommandsEvent) {
-		event.dispatcher.register(
+	fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
+		dispatcher.register(
 			Commands.literal("god")
 				.requires { it.permissions().hasPermission(Permissions.COMMANDS_OWNER) }
 				.executes { ctx -> toggle(ctx.source, listOf(ctx.source.playerOrException)) }
@@ -52,7 +52,7 @@ object GodModeCommands {
 
 	private fun check(source: CommandSourceStack, target: ServerPlayer): Int {
 		val key = when {
-			source.level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS.get()) -> "commands.godmode.check.gamerule"
+			source.level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS) -> "commands.godmode.check.gamerule"
 			target.isGod -> "commands.godmode.check.god"
 			else -> "commands.godmode.check.mortal"
 		}
@@ -61,7 +61,7 @@ object GodModeCommands {
 	}
 
 	private fun list(source: CommandSourceStack): Int {
-		if (source.level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS.get())) {
+		if (source.level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS)) {
 			source.sendSuccess({ Component.translatable("commands.godmode.list.gamerule") }, false)
 		}
 		val gods = source.server.playerList.players.filter { it.isGod }

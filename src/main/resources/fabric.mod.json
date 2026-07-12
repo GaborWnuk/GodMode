@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "godmode",
+	"version": "${version}",
+	"name": "God Mode",
+	"description": "Survival god mode — you simply cannot die.",
+	"license": "All Rights Reserved",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.gaborwnuk.godmode.GodModeFabric",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.0",
+		"minecraft": "${minecraftVersionRange}",
+		"java": ">=${java}",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}

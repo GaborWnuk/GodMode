@@ -35,8 +35,13 @@ death.
 
 ## Requirements
 
-- Minecraft 26.1.2 with [NeoForge](https://neoforged.net/) 26.1.2.78 or newer
-- [Kotlin for Forge](https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge) 6.3.0 or newer
+Minecraft 26.1.2, on either loader:
+
+- **NeoForge** jar: [NeoForge](https://neoforged.net/) 26.1.2.78+ and
+  [Kotlin for Forge](https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge) 6.3.0+
+- **Fabric** jar: [Fabric Loader](https://fabricmc.net/) 0.19+,
+  [Fabric API](https://modrinth.com/mod/fabric-api) and
+  [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin)
 
 ## Building from source
 
@@ -44,4 +49,5 @@ death.
 ./gradlew build
 ```
 
-The jar lands in `build/libs/`.
+The jars land in `versions/26.1.2-fabric/build/libs/` and
+`versions/26.1.2-neoforge/build/libs/`.

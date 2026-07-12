@@ -1,8 +1,8 @@
 package com.gaborwnuk.godmode
 
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 
 /**
  * The heart of the mod: when a player would die while godlike — either personally
@@ -10,13 +10,19 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
  * and the player is left standing at half a heart.
  */
 object DeathPrevention {
-	fun onLivingDeath(event: LivingDeathEvent) {
-		val player = event.entity as? Player ?: return
-		val level = player.level() as? ServerLevel ?: return
-		val everyoneIsGodlike = level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS.get())
+	/**
+	 * Called when [entity] is about to die. Returns true — after healing the
+	 * player back to half a heart — if the death should be cancelled. Each loader
+	 * entrypoint hooks this into its own death event.
+	 */
+	fun tryPreventDeath(entity: LivingEntity): Boolean {
+		val player = entity as? Player ?: return false
+		val level = player.level() as? ServerLevel ?: return false
+		val everyoneIsGodlike = level.gameRules.get(GodModeGameRules.GODLIKE_PLAYERS)
 		if (everyoneIsGodlike || player.isGod) {
-			event.isCanceled = true
 			player.health = 1.0f
+			return true
 		}
+		return false
 	}
 }

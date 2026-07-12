@@ -4,13 +4,13 @@ plugins {
 }
 
 val javaVersion = JavaVersion.VERSION_25
-val mcVersionRange: String = property("mc.version_range").toString()
+val mcVersionRangeForNeoForge: String = sc.properties["mod.mc_compat"]
 
-version = "${property("mod.version")}+${property("mc.version")}"
+version = "${property("mod.version")}+${sc.current.version}"
 group = property("mod.group").toString()
 
 base {
-	archivesName = property("mod.id").toString()
+	archivesName = "${property("mod.id")}-neoforge"
 }
 
 repositories {
@@ -22,7 +22,7 @@ dependencies {
 }
 
 neoForge {
-	version = property("deps.neo_loader").toString()
+	version = sc.properties["deps.neo_loader"]
 
 	mods {
 		register("godmode") {
@@ -33,18 +33,18 @@ neoForge {
 	runs {
 		register("client") {
 			client()
-			gameDirectory = project.file("run")
+			gameDirectory = rootProject.file("run")
 		}
 		register("server") {
 			server()
-			gameDirectory = project.file("run")
+			gameDirectory = rootProject.file("run")
 		}
 	}
 }
 
 tasks {
 	processResources {
-		inputs.property("minecraftVersionRange", mcVersionRange)
+		inputs.property("minecraftVersionRange", mcVersionRangeForNeoForge)
 		inputs.property("version", project.version)
 
 		filesMatching("META-INF/neoforge.mods.toml") {
@@ -53,6 +53,12 @@ tasks {
 				"version" to inputs.properties["version"],
 			))
 		}
+
+		exclude("fabric.mod.json")
+	}
+
+	named("createMinecraftArtifacts") {
+		dependsOn("stonecutterGenerate")
 	}
 }
 
