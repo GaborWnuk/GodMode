@@ -51,3 +51,7 @@ Minecraft 26.1.2, on either loader:
 
 The jars land in `versions/26.1.2-fabric/build/libs/` and
 `versions/26.1.2-neoforge/build/libs/`.
+
+## Credits
+
+Icon for this mod has been designed using resources from Flaticon.com.
