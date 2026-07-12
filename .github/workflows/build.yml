@@ -1,6 +1,7 @@
-# Builds every loader target on each push and pull request, and attaches the
-# Fabric and NeoForge jars to a GitHub release whenever a tag is pushed
-# (e.g. `git tag v1.0.0 && git push origin v1.0.0`).
+# Builds every loader target on each push and pull request. Whenever a tag is
+# pushed (e.g. `git tag v1.0.0 && git push origin v1.0.0`), the Fabric and
+# NeoForge jars are attached to a GitHub release and uploaded to Modrinth
+# (https://modrinth.com/project/god-mode, requires the MODRINTH_TOKEN secret).
 
 name: build
 on: [pull_request, push, workflow_dispatch]
@@ -54,10 +55,12 @@ jobs:
           name: GodMode-${{ matrix.minecraftVersion }}
           path: versions/${{ matrix.minecraftVersion }}/build/libs/
 
-      - name: Publish GitHub release
+      - name: Publish release (GitHub + Modrinth)
         if: startsWith(github.ref, 'refs/tags/')
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-tag: ${{ github.ref_name }}
+          modrinth-id: god-mode
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
