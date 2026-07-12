@@ -1,0 +1,63 @@
+# Builds every loader target on each push and pull request, and attaches the
+# Fabric and NeoForge jars to a GitHub release whenever a tag is pushed
+# (e.g. `git tag v1.0.0 && git push origin v1.0.0`).
+
+name: build
+on: [pull_request, push, workflow_dispatch]
+
+jobs:
+  find_versions:
+    runs-on: ubuntu-latest
+    outputs:
+      minecraftVersions: ${{ steps.find_versions.outputs.minecraftVersions }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Find versions
+        id: find_versions
+        run: |
+          minecraftVersions=$(ls -1 versions | jq -R | jq -s -c)
+          echo "minecraftVersions=${minecraftVersions}" >> "$GITHUB_OUTPUT"
+
+  build:
+    strategy:
+      matrix:
+        minecraftVersion: ${{ fromJson(needs.find_versions.outputs.minecraftVersions) }}
+      fail-fast: false
+      # Both jars are attached to the same release; serialize to avoid racing it.
+      max-parallel: 1
+    runs-on: ubuntu-latest
+    needs: find_versions
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+
+      - name: Set Minecraft version
+        run: ./gradlew "Set active project to ${{ matrix.minecraftVersion }}"
+
+      - name: Build
+        run: ./gradlew :${{ matrix.minecraftVersion }}:build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GodMode-${{ matrix.minecraftVersion }}
+          path: versions/${{ matrix.minecraftVersion }}/build/libs/
+
+      - name: Publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-tag: ${{ github.ref_name }}
+          files: versions/${{ matrix.minecraftVersion }}/build/libs/*.jar
