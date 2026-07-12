@@ -1,0 +1,12 @@
+# Gradle
+.gradle/
+build/
+
+# Development runs
+run/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.kotlin/

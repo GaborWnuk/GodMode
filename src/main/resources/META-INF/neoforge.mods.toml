@@ -1,0 +1,30 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[6,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "godmode"
+version = "${version}"
+displayName = "God Mode"
+description = '''Survival god mode — you simply cannot die.'''
+
+[[dependencies.godmode]]
+modId = "neoforge"
+type = "required"
+versionRange = "${minecraftVersionRange}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.godmode]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraftVersionRange}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.godmode]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[6.3.0,)"
+ordering = "NONE"
+side = "BOTH"

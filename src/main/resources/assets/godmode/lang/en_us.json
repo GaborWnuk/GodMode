@@ -1,0 +1,13 @@
+{
+  "gamerule.godmode.godlike_players": "Godlike Players",
+  "gamerule.godmode.godlike_players.description": "Makes every player immortal.",
+
+  "commands.godmode.enabled": "%s is now a god",
+  "commands.godmode.disabled": "%s is now a mortal",
+  "commands.godmode.check.gamerule": "%s is a god (the godlike_players gamerule makes everyone immortal)",
+  "commands.godmode.check.god": "%s is a god",
+  "commands.godmode.check.mortal": "%s is a mortal",
+  "commands.godmode.list.gamerule": "The godlike_players gamerule is on — every player is currently immortal",
+  "commands.godmode.list": "Gods online: %s",
+  "commands.godmode.list.empty": "There are no gods online"
+}
