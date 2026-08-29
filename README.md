@@ -35,13 +35,17 @@ death.
 
 ## Requirements
 
-Minecraft 26.1.2, on either loader:
+Minecraft **26.2** or **26.1.2**, on either loader:
 
-- **NeoForge** jar: [NeoForge](https://neoforged.net/) 26.1.2.78+ and
+- **NeoForge** jar: [NeoForge](https://neoforged.net/) 26.2.0.72+ on 26.2
+  (26.1.2.78+ on 26.1.2) and
   [Kotlin for Forge](https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge) 6.3.0+
 - **Fabric** jar: [Fabric Loader](https://fabricmc.net/) 0.19+,
   [Fabric API](https://modrinth.com/mod/fabric-api) and
   [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin)
+
+Every release ships a Fabric and a NeoForge jar per supported Minecraft version —
+pick the one matching your game, e.g. `godmode-fabric-1.1.0+26.2.jar`.
 
 ## Building from source
 
@@ -49,8 +53,12 @@ Minecraft 26.1.2, on either loader:
 ./gradlew build
 ```
 
-The jars land in `versions/26.1.2-fabric/build/libs/` and
-`versions/26.1.2-neoforge/build/libs/`.
+The jars land in `versions/<mc-version>-<loader>/build/libs/`, e.g.
+`versions/26.2-fabric/build/libs/`. To build just one target:
+
+```
+./gradlew :26.2-neoforge:build
+```
 
 ## Credits
 

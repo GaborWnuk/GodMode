@@ -28,6 +28,7 @@ stonecutter {
 		}
 
 		match("26.1.2", "fabric", "neoforge")
-		vcsVersion = "26.1.2-fabric"
+		match("26.2", "fabric", "neoforge")
+		vcsVersion = "26.2-fabric"
 	}
 }
