@@ -45,7 +45,7 @@ Minecraft **26.2** or **26.1.2**, on either loader:
   [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin)
 
 Every release ships a Fabric and a NeoForge jar per supported Minecraft version —
-pick the one matching your game, e.g. `godmode-fabric-1.1.0+26.2.jar`.
+pick the one matching your game, e.g. `godmode-fabric-1.1.1+26.2.jar`.
 
 ## Building from source
 
