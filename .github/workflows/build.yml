@@ -1,7 +1,8 @@
 # Builds every loader target on each push and pull request. Whenever a tag is
 # pushed (e.g. `git tag v1.0.0 && git push origin v1.0.0`), the Fabric and
-# NeoForge jars are attached to a GitHub release and uploaded to Modrinth
-# (https://modrinth.com/project/god-mode, requires the MODRINTH_TOKEN secret).
+# NeoForge jars are attached to a GitHub release and uploaded to:
+#   - Modrinth   https://modrinth.com/project/god-mode        (MODRINTH_TOKEN secret)
+#   - CurseForge https://www.curseforge.com/projects/1705919  (CURSEFORGE_TOKEN secret)
 
 name: build
 on: [pull_request, push, workflow_dispatch]
@@ -55,7 +56,7 @@ jobs:
           name: GodMode-${{ matrix.minecraftVersion }}
           path: versions/${{ matrix.minecraftVersion }}/build/libs/
 
-      - name: Publish release (GitHub + Modrinth)
+      - name: Publish release (GitHub + Modrinth + CurseForge)
         if: startsWith(github.ref, 'refs/tags/')
         uses: Kir-Antipov/mc-publish@v3.3
         with:
@@ -63,4 +64,6 @@ jobs:
           github-tag: ${{ github.ref_name }}
           modrinth-id: god-mode
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: 1705919
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: versions/${{ matrix.minecraftVersion }}/build/libs/*.jar

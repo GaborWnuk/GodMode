@@ -28,3 +28,10 @@ type = "required"
 versionRange = "[6.3.0,)"
 ordering = "NONE"
 side = "BOTH"
+
+# The mod id differs from the project slug on Modrinth/CurseForge; without this
+# alias mc-publish cannot resolve the dependency and silently drops it from the
+# uploaded file's relations.
+[dependencies.godmode.mc-publish]
+modrinth = "kotlin-for-forge"
+curseforge = "kotlin-for-forge"
